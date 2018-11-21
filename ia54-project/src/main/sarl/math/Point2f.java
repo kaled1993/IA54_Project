@@ -111,7 +111,7 @@ public class Point2f extends Tuple2f implements java.io.Serializable {
   /**
     * Computes the L-infinite distance between this point and
     * point p1.  The L-infinite distance is equal to
-    * MAX[abs(x1-x2), abs(y1-y2), abs(z1-z2)].
+    * MAX[abs(x1-x2), abs(y1-y2)].
     * @param p1 the other point
     * @return  the L-infinite distance
     */

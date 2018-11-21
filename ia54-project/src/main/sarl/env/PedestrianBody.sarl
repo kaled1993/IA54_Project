@@ -1,0 +1,166 @@
+/** 
+ * 
+ */
+package env
+
+import java.util.UUID
+import math.Vector2f
+
+/** 
+ * @author kaled
+ * 
+ */
+class PedestrianBody extends Object {
+
+	/** UUID of the agent that owns this body.
+	*/
+	var id : UUID
+
+	/** Pedestrian speed.
+	 */
+	val speed = new Vector2f
+
+	/** Speed of the Pedestrian after the motion is accepted by the environment.
+	 */
+	val speedInfluence = new Vector2f
+
+	/** Group of the Pedestrian.
+	 */
+	var group : int
+
+	/** Max speed of the Pedestrian.
+	 */
+	var maxSpeed : int
+
+	/** Perception angle of the Pedestrian.
+	 */
+	var perceptionAngle : int
+
+	/** Perception distance of the Pedestrian.
+	 */
+	var perceptionDistance : int
+
+	new (id : UUID, groupe : int, groupeVitesseMax : int, masse : int, angleVisibilite : int,
+		distanceVisibilite : int) {
+		this.id = id
+		this.group = groupe
+		this.maxSpeed = groupeVitesseMax
+		this.perceptionAngle = angleVisibilite
+		this.perceptionDistance = distanceVisibilite
+	}
+
+	new (body : PedestrianBody) {
+		this.group = body.group
+		this.maxSpeed = body.maxSpeed
+		this.perceptionAngle = body.perceptionAngle
+		this.perceptionDistance = body.perceptionDistance
+	}
+
+	/** 
+	 * @return The identifier of the agent that owns this body.
+	 */
+	def getID : UUID {
+		return this.id
+	}
+
+	/** 
+	 * @return The current speed of the pedestrians.
+	 */
+	def getSpeed : Vector2f {
+		this.speed
+	}
+
+	/** 
+	 * @return The group of pedestrians.
+	 */
+	def getGroup : int {
+		return this.group
+	}
+
+	/** 
+	 * @return The perception angle.
+	 */
+	def getPerceptionAngle : int {
+		this.perceptionAngle
+	}
+
+	/** 
+	 * @return the perception distance.
+	 */
+	def getPerceptionDistance : int {
+		this.perceptionDistance
+	}
+
+	/** 
+	 * @return the max speed.
+	 */
+	def getMaxSpeed : int {
+		this.maxSpeed
+	}
+
+	/** 
+	 * @return The speed to apply to the body after its validation by the environment.
+	 */
+	def getSpeedInfluence : Vector2f {
+		this.speedInfluence
+	}
+
+	/** 
+	 * @return The mass of the body.
+	 */
+	def getMass : int {
+		this.mass
+	}
+
+	/** 
+	 * @param id the identifier of the agent that owns this body.
+	 */
+	def setID(id : UUID) {
+		assert id !== null
+		this.id = id
+	}
+
+	/** 
+	 * @param v the current speed of the body.
+	 */
+	def setSpeed(v : Vector2f) {
+		assert v !== null
+		this.speed.set(v)
+	}
+
+	/** 
+	 * @param i the group number.
+	 */
+	def setGroup(i : int) {
+		this.group = i
+	}
+
+	/** 
+	 * @param i the perception angle.
+	 */
+	def setPerceptionAngle(i : int) {
+		this.perceptionAngle = i
+	}
+
+	/** 
+	 * @param i the perception distance.
+	 */
+	def setPerceptionDistance(i : int) {
+		this.perceptionDistance = i
+	}
+
+	/** 
+	 * @param vMax the maximum speed
+	 */
+	def setMaxSpeed(vMax : int) {
+		this.maxSpeed = vMax
+	}
+
+	/** 
+	 * @param newV the speed to apply to the body.
+	 */
+	def setSpeedInfluence(newV : Vector2f) {
+		assert newV !== null
+		this.speedInfluence.set(newV)
+	}
+}

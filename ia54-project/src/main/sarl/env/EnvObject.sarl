@@ -1,0 +1,32 @@
+/** 
+ * 
+ */
+package env
+
+import math.Point2f
+
+/** 
+ * @author kaled
+ * 
+ */
+class EnvObject extends Object {
+
+			/** Position of the object.
+		 */
+	val position = new Point2f
+	
+	/** 
+	 * @return the position of the object.
+	 */
+	def getPosition : Point2f {
+		this.position
+	}
+	
+	/** 
+	 * @param position the new position.
+	 */
+	def setPosition(position : Point2f) {
+		assert position !== null
+		this.position.set(position)
+	}
+}
