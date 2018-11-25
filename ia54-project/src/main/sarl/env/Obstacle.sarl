@@ -1,0 +1,30 @@
+/** 
+ * 
+ */
+package env
+
+import java.util.List
+import javafx.scene.shape.Polygon
+import java.util.ArrayList
+
+/** 
+ * @author kaled
+ * 
+ */
+ 
+class Obstacle extends Object {
+
+	/** Le polygone correpsondant à l'obstacle.
+		 */
+	var shape : Polygon
+	
+/** liste des arrêtes de polygone */
+	var edges : List<Double>
+	
+	new (edges : List<Double>)
+	{
+		
+		this.edges = edges ; 
+	}
+	
+}
