@@ -18,7 +18,6 @@ public class AgentGraphique extends Thread{
     
     public AgentGraphique(Circle r, Polyline poly) {
         this.r = r;
-        //this.v = v;
         p = poly;
         transition = null;
         agAssocie = null;
@@ -29,7 +28,7 @@ public class AgentGraphique extends Thread{
         //this.v = v;
         p = poly;
         transition = null;
-        agAssocie = ag;
+        agAssocie = ag;	
     }
     
     @Override

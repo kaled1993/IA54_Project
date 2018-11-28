@@ -20,9 +20,11 @@ public class FenetreSimulation extends Scene{
 	private final Pane pane;
 	private final Launcher launcher;
 	private ArrayList<SituatedObject> components;
+	private Map map;
+	private ArrayList<SituatedObject> Agents;
 
 	public FenetreSimulation(Fenetre parent, Launcher l){
-		super(new Pane(), 1920,1080);
+		super(new Pane(),1920,1080);
 		components= new ArrayList<SituatedObject>();
 		System.gc();
 
@@ -30,14 +32,16 @@ public class FenetreSimulation extends Scene{
 		this.setRoot(pane);
 		this.launcher=l;
 
+		this.map = new Map();
 		initialisationNiveau(parent,l);
+		//After everything is init we init the objective field
+		//pane.getChildren().add(this.map.getObj());
 	}
 
-	private void initialisationNiveau(Fenetre parent, Launcher l) {
+	private void initialisationNiveau(Fenetre parent, Launcher l){
 		// TODO Auto-generated method stub
-		final ImageView img = new ImageView("file:///D:/max_m/T%E9l%E9chargements/MiniMetroV1.1/MiniMetro/");
+		final ImageView img = new ImageView("images/mapAgent2.png");
 		pane.getChildren().add(img);
-
 		try {
 			initLevel("src/images/MaDesc.txt");
 		} catch (IOException e) {
@@ -46,36 +50,73 @@ public class FenetreSimulation extends Scene{
 		}
 	}
 
+	//MAP OBJ EST INIT ICI
+	private void addComponents(String type, ArrayList<Double> tabxy){
+		SituatedObject s = null;
+		switch(type){
+		case "S":
+			s=new Sol(type,tabxy);
+			//pane.getChildren().add(s.body);
+			break;
+		case "M":
+			s=new Mur(type,tabxy);
+			//pane.getChildren().add(s.body);
+			break;
+		case "P":
+			s=new Porte(type,tabxy);
+			//pane.getChildren().add(s.body);
+			break;
+		case "O":
+			System.out.println(type);
+			s=new Objectif(type,tabxy);
+			if(tabxy.get(0)!=0 && tabxy.get(1)!=0){
+				map.setInnerBorder(s.body);
+				this.map.setObj();
+			}
+			else{				
+				map.setOuterBorder(s.body);
+			}
+			//pane.getChildren().add(this.map.getObj());
+			break;
+		default:
+			break;
+		}			
+		components.add(s);
+		//pane.getChildren().add(s.getBody());
+	}
+
 	private void initLevel(String levelDescPath) throws IOException{
 		// TODO Auto-generated method stub
-		System.out.println("FILE PATH " + levelDescPath);
 		try (BufferedReader buff = new BufferedReader(new FileReader(levelDescPath))) {
 			Iterator<String> it = buff.lines().iterator();
 			String tmp;
-
 			//Tant que le fichier n'est pas lu en entier
 			//on recupere chaque ligne, on separe la string selon un separateur qu'on aura convenu, ici le format est le suivant type:[coordx,coordy...]
 			//et on cree l'objet selon la string recuperee
 			String[] tab;
 			ArrayList<Double> tabxy = new ArrayList<Double>();
-			SituatedObject sOTmp;
-			int i=0;
-			while (it.hasNext()) {
+			while (it.hasNext()){
 				tmp = it.next();
 				tab = tmp.split(":");
-				for(String s: tab[1].split(";")){
+				for(String s: tab[1].split(";"))
+				{
 					tabxy.add(Double.parseDouble(s.split((","))[0]));
 					tabxy.add(Double.parseDouble(s.split((","))[1]));
 				}
-				components.add(new SituatedObject(tab[0],tabxy));
-				pane.getChildren().add(components.get(i).getBody());
+				this.addComponents(tab[0],tabxy);
+				//AFFICHAGE DES POLYGONES EN CAS DE DEBUG
 				tabxy=new ArrayList<Double>();
-				i++;
 			}
-
-
 		}
+		//this.map.setMap();
 	}
+
+	//NEED BOUCLE DU JEU POUR CA
+	//	private void initAgent(int nb){
+	//		while(nb>0){
+	//			components.add(new AgentGraphique());
+	//		}
+	//	}
 
 	public ArrayList<SituatedObject> getComponents() {
 		return components;

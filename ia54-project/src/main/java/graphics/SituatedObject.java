@@ -1,37 +1,47 @@
 package graphics;
 
 import javafx.scene.paint.Color;
+
+import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.UUID;
 
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Polyline;
 
-public class SituatedObject {
+public abstract class SituatedObject {
 
-	private Polygon body;
-	private ObjectType type;
-	private final UUID id;
-	private int z;
-	public SituatedObject(String type,Collection<Double> xypoints){
+	protected Polygon body;
+	protected ObjectType type;
+	protected UUID id;
+	protected Polyline path;
+	protected boolean isOccluder;
+	private WeakReference<Map> map;
+	
+	//POSSIBILITE DE RENDRE CETTE CLASSE ABSTRAITE AVEC DES TYPES UN PEU PLUS PRECIS
+	//FEEL FREE TO DO THAT
+	public SituatedObject(){
+		this.id = UUID.randomUUID();
+		this.body= new Polygon();
+	}
+	public SituatedObject(String type,Collection<Double> xypoints, WeakReference<Map> m)
+	{
 		this.body=new Polygon();
 		this.id = UUID.randomUUID();
 		this.createBody(xypoints);
-		switch(type){
-		case "M":
-			this.type=ObjectType.Mur;
-			body.setStroke(Color.BLACK);
-			body.setFill(Color.BLACK);
-			break;
-		case "P":
-			this.type=ObjectType.Porte;
-			body.setStroke(Color.BLUE);
-			body.setFill(Color.BLUE);
-			break;
-		default:
-			this.type=ObjectType.Agent;
-		}
+		body.setStroke(Color.BLACK);
+		body.setFill(Color.TRANSPARENT);
+		//this.map=m;
 	}
+	public SituatedObject(String type,Collection<Double> xypoints)
+	{
+		this.body=new Polygon();
+		this.id = UUID.randomUUID();
+		this.createBody(xypoints);
+		body.setStroke(Color.BLACK);
+		body.setFill(Color.TRANSPARENT);
 
+	}
 	private void createBody(Collection<Double> xypoints) {
 		body.getPoints().addAll(xypoints);		
 	}

@@ -4,8 +4,10 @@ public enum ObjectType {
 
     Mur("M"),
     Porte("P"),
-    Agent("A");
-
+    Agent("A"),
+	Sol("S"),
+	Objectif("O");
+	
     private String type = "";
 
     ObjectType(String str) {
